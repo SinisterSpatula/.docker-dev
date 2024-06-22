@@ -25,9 +25,7 @@ RUN apt-get update \
     apt-get -y --no-install-recommends install \
         tini
 
-RUN groupadd --gid ${GID} ${USER} || true \
-    && useradd --uid ${UID} --gid ${GID} --home-dir /usr/src/app/ --shell /bin/bash ${USER} || true \
-    && chown -R ${USER}:${USER} /usr/src/app/
+RUN usermod -d /usr/src/app/ root
 
 
 RUN npm install
