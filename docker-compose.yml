@@ -29,7 +29,7 @@ services:
       MONGO_INITDB_DATABASE: nodebb
     volumes:
       - mongo-data:/data/db
-      - ./install/docker/mongodb-user-init.js:/docker-entrypoint-initdb.d/user-init.js
+      - ../install/docker/mongodb-user-init.js:/docker-entrypoint-initdb.d/user-init.js
   redis:
     image: redis:7.2.4-alpine
     restart: unless-stopped
