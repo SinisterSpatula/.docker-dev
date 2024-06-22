@@ -25,9 +25,6 @@ RUN apt-get update \
     apt-get -y --no-install-recommends install \
         tini
 
-RUN usermod -d /usr/src/app/ root
-
-
 RUN npm install
     # TODO: generate lockfiles for each package manager
     ## pnpm import \
