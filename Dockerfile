@@ -50,19 +50,12 @@ COPY --from=build --chown=${USER}:${USER} /usr/bin/tini /usr/src/app/install/doc
 RUN chmod +x /usr/local/bin/entrypoint.sh \
     && chmod +x /usr/local/bin/tini
 
+COPY .docker-dev/linkplugins.sh /usr/local/bin/linkplugins.sh
+
+RUN chmod +x /usr/local/bin/linkplugins.sh
+
 # TODO: Have docker-compose use environment variables to create files like setup.json and config.json.
 # COPY --from=hairyhenderson/gomplate:stable /gomplate /usr/local/bin/gomplate
-
-# for each plugin in /usr/src/app/plugins/ use npm link to link it to the global node_modules in /usr/src/app/node_modules
-WORKDIR /usr/src/app/plugins/
-
-RUN for plugin in *; do \
-    echo "Linking plugin: $plugin"; \
-    cd $plugin; \
-    npm link; \
-    cd..; \
-    npm link $plugin; \
-    done
 
 USER ${USER}
 
