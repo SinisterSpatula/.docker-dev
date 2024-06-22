@@ -11,7 +11,8 @@ services:
       - nodebb-build:/usr/src/app/build
       - nodebb-uploads:/usr/src/app/public/uploads
       - nodebb-config:/opt/config
-      - ./install/docker/setup.json:/usr/src/app/setup.json
+      - ../install/docker/setup.json:/usr/src/app/setup.json
+      - ../plugins-nodebb:/usr/src/app/plugins
 
   mongo:
     image: 'mongo:7-jammy'

@@ -3,13 +3,13 @@ FROM node:lts as build
 ENV NODE_ENV=production \
     DAEMON=false \
     SILENT=false \
-    USER=nodebb \
-    UID=1001 \
-    GID=1001
+    USER=root \
+    UID=1000 \
+    GID=1000
 
 WORKDIR /usr/src/app/
 
-COPY . /usr/src/app/
+COPY .. /usr/src/app/
 
 # Install corepack to allow usage of other package managers
 RUN corepack enable
@@ -29,20 +29,18 @@ RUN groupadd --gid ${GID} ${USER} \
     && useradd --uid ${UID} --gid ${GID} --home-dir /usr/src/app/ --shell /bin/bash ${USER} \
     && chown -R ${USER}:${USER} /usr/src/app/
 
-USER ${USER}
-
-RUN npm install --omit=dev
+RUN npm install
     # TODO: generate lockfiles for each package manager
     ## pnpm import \
 
 FROM node:lts-slim AS final
 
-ENV NODE_ENV=production \
+ENV NODE_ENV=development \
     DAEMON=false \
     SILENT=false \
-    USER=nodebb \
-    UID=1001 \
-    GID=1001
+    USER=root \
+    UID=1000 \
+    GID=1000
 
 WORKDIR /usr/src/app/
 
@@ -60,6 +58,17 @@ RUN chmod +x /usr/local/bin/entrypoint.sh \
 
 # TODO: Have docker-compose use environment variables to create files like setup.json and config.json.
 # COPY --from=hairyhenderson/gomplate:stable /gomplate /usr/local/bin/gomplate
+
+# for each plugin in /usr/src/app/plugins/ use npm link to link it to the global node_modules in /usr/src/app/node_modules
+WORKDIR /usr/src/app/plugins/
+
+RUN for plugin in *; do \
+    echo "Linking plugin: $plugin"; \
+    cd $plugin; \
+    npm link; \
+    cd..; \
+    npm link $plugin; \
+    done
 
 USER ${USER}
 
