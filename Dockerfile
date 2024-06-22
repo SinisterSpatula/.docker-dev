@@ -9,7 +9,7 @@ ENV NODE_ENV=production \
 
 WORKDIR /usr/src/app/
 
-COPY .. /usr/src/app/
+COPY . /usr/src/app/
 
 # Install corepack to allow usage of other package managers
 RUN corepack enable
@@ -44,8 +44,6 @@ ENV NODE_ENV=development \
 WORKDIR /usr/src/app/
 
 RUN corepack enable \
-    && groupadd --gid ${GID} ${USER} \
-    && useradd --uid ${UID} --gid ${GID} --home-dir /usr/src/app/ --shell /bin/bash ${USER} \
     && mkdir -p /usr/src/app/logs/ /opt/config/ \
     && chown -R ${USER}:${USER} /usr/src/app/ /opt/config/
 
