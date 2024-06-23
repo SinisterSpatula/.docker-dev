@@ -11,7 +11,7 @@ cd .docker-dev
 docker-compose --profile redis up -d
 ```
 
-Afterwards, go into the container using `docker exec -it nodebb-dev bash` and run:
+Afterwards, go into the container using `docker exec -it docker-dev-nodebb-1 bash` and run:
 
 ```
 cd /usr/src/app/plugins
@@ -23,6 +23,7 @@ cd nodebb-plugin-herotheme
 npm link
 cd ..
 npm link nodebb-plugin-herotheme
+./nodebb build
 ```
 
 This will create a symlink for each plugin in node_modules.
