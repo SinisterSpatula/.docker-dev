@@ -10,3 +10,19 @@ git clone https://github.com/SinisterSpatula/plugins-nodebb.git
 cd .docker-dev
 docker-compose --profile redis up -d
 ```
+
+Afterwards, go into the container using `docker exec -it nodebb-dev bash` and run:
+
+```
+cd /usr/src/app/plugins
+cd nodebb-plugin-avatargallery
+npm link
+cd ..
+npm link nodebb-plugin-avatargallery
+cd nodebb-plugin-herotheme
+npm link
+cd ..
+npm link nodebb-plugin-herotheme
+```
+
+This will create a symlink for each plugin in node_modules.
