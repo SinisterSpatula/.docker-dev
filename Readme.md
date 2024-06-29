@@ -11,7 +11,9 @@ cd .docker-dev
 docker-compose --profile redis up -d
 ```
 
-Afterwards, go into the container using `docker exec -it docker-dev-nodebb-1 bash` and run:
+Afterwards, visit https://localhost:4567 and complete the install.
+
+Then: go into the container using `docker exec -it docker-dev-nodebb-1 bash` and run:
 
 ```
 cd /usr/src/app/plugins
@@ -27,3 +29,14 @@ npm link nodebb-plugin-herotheme
 ```
 
 This will create a symlink for each plugin in node_modules.
+
+### Update NodeBB
+
+first be sure to backup the mongo database.
+
+```
+docker-compose --profile redis stop
+cd NodeBB
+git fetch
+(or to change versions use git checkout v3.x, then do a docker rebuild)
+```
