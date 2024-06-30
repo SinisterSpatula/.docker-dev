@@ -15,6 +15,7 @@ services:
       - nodebb-config:/opt/config
       - ../install/docker/setup.json:/usr/src/app/setup.json
       - ../plugins-nodebb:/usr/src/app/plugins
+    command: ['tail', '-f', '/dev/null']
 
   mongo:
     image: 'mongo:7-jammy'
